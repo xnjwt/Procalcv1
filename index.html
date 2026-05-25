@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGP - Gestor Académico</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header__container">
+            <h1 class="main-header__logo">SGP<span>.ec</span></h1>
+            <div id="materia-visor" class="materia-visor oculto">
+                <h2 id="materia-titulo"></h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-viewport">
+        <div class="cards-layout">
+            
+            <article class="sgp-card main-card">
+                <header class="sgp-card__header">
+                    <div class="sgp-card__info">
+                        <h2 class="sgp-card__title">Parciales</h2>
+                        <span class="sgp-card__subtitle">Gestión Jerárquica Completa</span>
+                    </div>
+                    <div class="sgp-card__actions">
+                        <button class="sgp-card__btn" id="btn-config" title="Editar Ponderaciones">
+                            <i class="fa-solid fa-sliders"></i>
+                        </button>
+                        <button class="sgp-card__btn" id="btn-guardar" title="Guardar Materia">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                        </button>
+                    </div>
+                </header>
+
+                <div id="panel-guardar" class="panel-accion oculto">
+                    <input type="text" id="input-nombre-materia" class="input-texto" placeholder="Nombre materia">
+                    <button id="btn-confirmar-guardar" class="btn-primario">Guardar</button>
+                </div>
+
+                <section class="nodes-wrapper">
+                    <div class="node-item">
+                        <div class="node-item__meta">
+                            <span class="node-item__name">1er parcial</span>
+                            <span class="node-item__badge peso-visor" id="visor-peso-p1">50%</span>
+                            <input type="number" class="peso-input oculto" data-id="P1" value="50" min="1" max="99" step="1">
+                        </div>
+                        <div class="node-item__input-group">
+                            <input type="number" class="node-item__field calificacion-main" id="input-main-p1" placeholder="-" min="0" max="10" step="0.01">
+                            <button class="node-item__btn btn-expand" id="btn-expand-p1"><i class="fa-solid fa-expand"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="node-item">
+                        <div class="node-item__meta">
+                            <span class="node-item__name">2do parcial</span>
+                            <span class="node-item__badge peso-visor" id="visor-peso-p2">50%</span>
+                            <input type="number" class="peso-input oculto peso-input--auto" data-id="P2" value="50" readonly title="Se calcula automáticamente">
+                        </div>
+                        <div class="node-item__input-group">
+                            <input type="number" class="node-item__field calificacion-main" id="input-main-p2" placeholder="-" min="0" max="10" step="0.01">
+                            <button class="node-item__btn btn-expand" id="btn-expand-p2"><i class="fa-solid fa-expand"></i></button>
+                        </div>
+                    </div>
+                </section>
+
+                <div id="seccion-estadisticas">
+                    <div class="predictive-engine__target-row">
+                        <span class="predictive-engine__target-label">Establecer Meta Final</span>
+                        <div class="predictive-engine__pill-input">
+                            <label for="meta-input">meta:</label>
+                            <input type="number" id="meta-input" class="predictive-engine__field" value="8.00" min="0" max="10" step="0.1">
+                            <i class="fa-solid fa-bullseye predictive-engine__icon"></i>
+                        </div>
+                    </div>
+
+                    <div id="resumen-completo" class="oculto">
+                        <h3 class="resumen-completo__titulo">Promedio Final</h3>
+                        <div class="resumen-completo__nota" id="promedio-final-texto">0.00</div>
+                        <span id="estado-final-texto" class="resumen-completo__meta"></span>
+                    </div>
+
+                    <section class="slider-box" id="caja-grafica">
+                        <div class="slider-box__labels">
+                            <div class="slider-box__limit">
+                                <span class="slider-box__value" id="limit-floor">0.00</span>
+                                <span class="slider-box__caption">Suelo (Mín)</span>
+                            </div>
+                            <div class="slider-box__limit slider-box__limit--right">
+                                <span class="slider-box__value" id="limit-ceiling">10.00</span>
+                                <span class="slider-box__caption">Techo (Máx)</span>
+                            </div>
+                        </div>
+
+                        <div class="slider-box__track">
+                            <div class="slider-box__fill" id="slider-fill"></div>
+                            
+                            <div class="slider-box__pin" id="slider-pin-user">
+                                <div class="slider-box__dot"></div>
+                            </div>
+                            
+                            <div class="slider-box__pin" id="slider-pin-target">
+                                <div class="slider-box__target-icon"><i class="fa-solid fa-bullseye"></i></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="metrics-grid" id="grid-metricas">
+                        <div class="metric-card metric-card--blue">
+                            <div class="metric-card__header">
+                                <i class="fa-solid fa-chart-simple"></i>
+                                <span class="metric-card__title">Promedio actual</span>
+                            </div>
+                            <span class="metric-card__number" id="metric-actual">0.00</span>
+                            <span class="metric-card__badge" id="badge-evaluated">0% evaluado</span>
+                        </div>
+
+                        <div class="metric-card metric-card--orange" id="tarjeta-necesaria">
+                            <div class="metric-card__header">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span class="metric-card__title">Nota necesaria</span>
+                            </div>
+                            <span class="metric-card__number" id="metric-required">0.00</span>
+                            <span class="metric-card__badge" id="badge-remaining">100% restante</span>
+                        </div>
+                    </section>
+
+                    <section class="insight-box" id="caja-insight">
+                        <p class="insight-box__text" id="insight-text"></p>
+                    </section>
+                </div>
+
+                <footer class="sgp-card__footer oculto" id="footer-colapsar">
+                    <i class="fa-solid fa-chevron-down" id="btn-colapsar-stats" style="cursor: pointer; font-size: 1.2rem; padding: 10px;"></i>
+                </footer>
+            </article>
+
+            <article class="sgp-card detail-card oculto" id="card-p1">
+                <header class="sgp-card__header">
+                    <h2 class="sgp-card__title">1er Parcial</h2>
+                </header>
+                <section class="nodes-wrapper" id="p1-nodes"></section>
+            </article>
+
+            <article class="sgp-card detail-card oculto" id="card-p2">
+                <header class="sgp-card__header">
+                    <h2 class="sgp-card__title">2do Parcial</h2>
+                </header>
+                <section class="nodes-wrapper" id="p2-nodes"></section>
+            </article>
+
+        </div>
+    </main>
+    
+    <script src="motor.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
