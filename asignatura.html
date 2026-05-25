@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGP - Asignaturas</title>
+    <link rel="stylesheet" href="asignatura.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="main-header__container">
+            <h1 class="main-header__logo">UG <span>SGP.ug</span></h1>
+            <nav class="main-header__nav">
+                <a href="index.html" class="main-header__link">Simulador</a>
+                <a href="analisis.html" class="main-header__link main-header__link--active">Asignaturas</a>
+                <a href="contacto.html" class="main-header__link">Soporte Técnico</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-viewport">
+        <section class="analysis-panel">
+            
+            <div class="panel-search-wrapper">
+                <div class="visual-search">
+                    <input type="text" id="searchBar" placeholder="Buscar asignatura...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+
+            <div class="subjects-visual-grid" id="subjectsGrid">
+                </div>
+
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 Universidad de Guayaquil - Facultad de Ciencias Matemáticas y Físicas. Grupo 37.</p>
+    </footer>
+
+    <script>
+        const searchBar = document.getElementById('searchBar');
+        const grid = document.getElementById('subjectsGrid');
+
+        const asignaturas = [
+            { id: 'daw', nombre: 'Desarrollo de Aplicaciones Web', p1: "7.33", p2: "7.00" },
+            { id: 'dba', nombre: 'Administración de Base de Datos', p1: "8.50", p2: "9.00" },
+            { id: 'ing', nombre: 'Ingeniería de Software II', p1: "8.00", p2: "7.50" },
+            { id: 'ops', nombre: 'Organización de la Producción', p1: "4.00", p2: "5.50" },
+            { id: 'met', nombre: 'Metodología de la Investigación', p1: "8.00", p2: "8.20" }
+        ];
+
+        function getVisualStatus(p1, p2) {
+            let num1 = parseFloat(p1);
+            let num2 = parseFloat(p2);
+
+            if (isNaN(num1)) num1 = 0.0;
+            if (isNaN(num2)) num2 = 0.0;
+
+            let avg = (num1 + num2) / 2;
+
+            if (avg >= 7.0) {
+                return { texto: 'Aprobado', badge: 'status-tag--approved', color: '#10b981', pct: (avg / 10) * 100, bgClass: 'card--approved', promedio: avg.toFixed(2) };
+            } else {
+                return { texto: 'Reprobado', badge: 'status-tag--reprof', color: '#ef4444', pct: (avg / 10) * 100, bgClass: 'card--reprof', promedio: avg.toFixed(2) };
+            }
+        }
+
+        function drawVisualCards(filter = "") {
+            grid.innerHTML = "";
+            
+            const updatedDaw = JSON.parse(localStorage.getItem('notes_daw'));
+            if (updatedDaw) {
+                asignaturas[0].p1 = updatedDaw.p1;
+                asignaturas[0].p2 = updatedDaw.p2;
+            }
+
+            asignaturas.forEach(item => {
+                if (!item.nombre.toLowerCase().includes(filter.toLowerCase())) return;
+
+                const config = getVisualStatus(item.p1, item.p2);
+
+                const card = document.createElement('div');
+                card.className = `visual-card ${config.bgClass}`;
+                card.innerHTML = `
+                    <div class="visual-card__header">
+                        <span class="materia-card__tag ${config.badge}">${config.texto}</span>
+                        <div class="visual-card__score" style="background-color: ${config.color}15; color: ${config.color}">
+                            <span>${config.promedio}</span>
+                        </div>
+                    </div>
+                    
+                    <h4 class="visual-card__title">${item.nombre}</h4>
+                    
+                    <div class="visual-card__progress-section">
+                        <div class="visual-card__track">
+                            <div class="visual-card__fill" style="width: ${config.pct}%; background-color: ${config.color}"></div>
+                        </div>
+                    </div>
+
+                    <div class="visual-card__action">
+                        <button class="visual-card__btn-link" style="background-color: ${config.color}12; border: 1px solid ${config.color}25; color: ${config.color}">
+                            <span>Ver detalles</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                `;
+
+                card.onclick = () => {
+                    localStorage.setItem('target_materia', JSON.stringify({ p1: item.p1, p2: item.p2 }));
+                    window.location.href = `index.html?materia=${encodeURIComponent(item.nombre)}`;
+                };
+
+                grid.appendChild(card);
+            });
+        }
+
+        searchBar.addEventListener('input', (e) => drawVisualCards(e.target.value));
+        drawVisualCards();
+    </script>
+</body>
+</html>

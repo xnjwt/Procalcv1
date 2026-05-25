@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGP - Soporte Técnico</title>
+    <link rel="stylesheet" href="soporte.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header__container">
+            <h1 class="main-header__logo"><span>SGP.ug</span></h1>
+            <nav class="main-header__nav">
+                <a href="index.html">Simulador</a>
+                <a href="analisis.html">Asignaturas</a>
+                <a href="contacto.html" class="active">Soporte Técnico</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-viewport">
+        <article class="support-card">
+            <header class="support-card__header">
+                <h2 class="support-card__title">Soporte Técnico</h2>
+                <p class="support-card__subtitle">Reporta incidencias en el cálculo de notas de tu ciclo académico.</p>
+            </header>
+
+            <form id="supportForm" class="support-form" novalidate>
+                <div class="form-group">
+                    <label class="form-group__label">Nombre del Estudiante</label>
+                    <input class="form-group__input" type="text" id="username" placeholder="Ej. Daniel Calle">
+                    <span class="form-group__error-msg" id="name-error">Requiere mínimo 3 caracteres.</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-group__label">Correo UG</label>
+                    <input class="form-group__input" type="email" id="email" placeholder="ejemplo@ug.edu.ec">
+                    <span class="form-group__error-msg" id="email-error">Ingresa un correo institucional válido.</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-group__label">Descripción del Inconveniente</label>
+                    <textarea class="form-group__textarea" id="message" rows="4" placeholder="Describe detalladamente el error..."></textarea>
+                    <span class="form-group__error-msg" id="msg-error">El campo es obligatorio.</span>
+                </div>
+
+                <button type="submit" class="support-form__submit-btn">Enviar Mensaje</button>
+                <div class="support-form__toast" id="success-toast">¡Reporte procesado exitosamente!</div>
+            </form>
+        </article>
+    </main>
+
+    <script>
+        document.getElementById('supportForm').onsubmit = function(e) {
+            e.preventDefault();
+            let valid = true;
+
+            const nameInput = document.getElementById('username').value.trim();
+            const emailInput = document.getElementById('email').value.trim();
+            const messageInput = document.getElementById('message').value.trim();
+
+            if(nameInput.length < 3) {
+                document.getElementById('name-error').style.display = 'block'; 
+                valid = false;
+            } else {
+                document.getElementById('name-error').style.display = 'none';
+            }
+
+            if(emailInput === "" || !emailInput.includes('@')) {
+                document.getElementById('email-error').style.display = 'block'; 
+                valid = false;
+            } else {
+                document.getElementById('email-error').style.display = 'none';
+            }
+
+            if(messageInput === "") {
+                document.getElementById('msg-error').style.display = 'block'; 
+                valid = false;
+            } else {
+                document.getElementById('msg-error').style.display = 'none';
+            }
+
+            if(valid) {
+                document.getElementById('success-toast').style.display = 'block';
+
+                const telefonoWhatsApp = "593991882632"; 
+
+                const textoMensaje = `*SGP - NUEVA INCIDENCIA*%0A%0A` +
+                                     `*Estudiante:* ${encodeURIComponent(nameInput)}%0A` +
+                                     `*Correo UG:* ${encodeURIComponent(emailInput)}%0A` +
+                                     `*Inconveniente:* ${encodeURIComponent(messageInput)}`;
+
+                const urlWhatsApp = `https://api.whatsapp.com/send?phone=${telefonoWhatsApp}&text=${textoMensaje}`;
+
+                this.reset();
+
+                setTimeout(() => { 
+                    document.getElementById('success-toast').style.display = 'none'; 
+                    window.open(urlWhatsApp, '_blank');
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>

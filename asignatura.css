@@ -1,0 +1,420 @@
+:root {
+    --bg-main: #0b0f19;
+    --bg-card: #111a2e;
+    --bg-input: #162032;
+    --text-main: #ffffff;
+    --text-muted: #64748b;
+    --primary-blue: #3b82f6;
+    --primary-blue-hover: #2563eb;
+    --primary-orange: #f97316;
+    --border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Reset y Reglas Universales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabecera Superior (Menú de Navegación) */
+.main-header {
+    background-color: #0e1322;
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+    width: 100%;
+}
+
+.main-header__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header__logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.main-header__logo span {
+    color: var(--primary-blue);
+}
+
+.main-header__nav {
+    display: flex;
+    gap: 20px;
+}
+
+.main-header__link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-header__link:hover, 
+.main-header__link--active,
+.main-header__nav a.active {
+    color: var(--text-main);
+}
+
+/* Vista Central Contenedora */
+.app-viewport {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Componente Base: Tarjetas (SGP y Soporte Unificados) */
+.sgp-card, .support-card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 24px !important;
+    width: 100%;
+    max-width: 440px;
+    padding: 24px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.sgp-card__header, .support-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.sgp-card__title, .support-card__title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #ffffff !important;
+}
+
+.sgp-card__subtitle, .support-card__subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted) !important;
+    margin-top: 2px;
+}
+
+.sgp-card__btn-config {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+/* Campos de Entrada Globales (Inputs, Textareas y Select) */
+#subjectSelect, .node-item__field, .form-group__input, .form-group__textarea {
+    width: 100%;
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+    padding: 12px;
+    border-radius: 12px;
+    outline: none;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+#subjectSelect {
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#subjectSelect option {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+.node-item__field:focus, .form-group__input:focus, .form-group__textarea:focus {
+    border-color: var(--primary-blue) !important;
+}
+
+/* Nodos e Inyección de Calificaciones */
+.nodes-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.node-item__meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.node-item__name { 
+    color: var(--text-muted); 
+}
+
+.node-item__badge {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+}
+
+.node-item__input-group {
+    position: relative;
+    display: flex;
+}
+
+.node-item__btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+/* Motor Predictivo y Sección de Metas */
+.predictive-engine__target-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.predictive-engine__pill-input {
+    background-color: var(--bg-input);
+    padding: 8px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.predictive-engine__pill-input label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.predictive-engine__field {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    width: 45px;
+    outline: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Control Gráfico Slider (Barra de Progreso Interactiva) */
+.slider-box { 
+    margin-bottom: 24px; 
+}
+
+.slider-box__labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.slider-box__value {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.slider-box__caption {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.slider-box__limit--right { 
+    text-align: right; 
+}
+
+.slider-box__track {
+    height: 6px;
+    background-color: var(--bg-input);
+    border-radius: 3px;
+    position: relative;
+    margin: 20px 0;
+}
+
+.slider-box__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-blue), #a855f7);
+    border-radius: 3px;
+}
+
+.slider-box__pin {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider-box__tag {
+    background-color: var(--primary-blue);
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    position: absolute;
+    bottom: -4px;
+}
+
+.slider-box__dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-blue);
+    border-radius: 50%;
+    border: 2px solid var(--bg-card);
+}
+
+.slider-box__target-icon {
+    color: var(--primary-orange);
+    font-size: 0.8rem;
+    background-color: var(--bg-card);
+    border-radius: 50%;
+}
+
+/* Rejilla de Visualización de Métricas Inferiores */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.metric-card {
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.metric-card--blue { background-color: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.15); }
+.metric-card--orange { background-color: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.15); }
+
+.metric-card__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.metric-card--blue .metric-card__header { color: var(--primary-blue); }
+.metric-card--orange .metric-card__header { color: var(--primary-orange); }
+
+.metric-card__title { color: var(--text-main); font-weight: 500; }
+.metric-card__number { font-size: 1.6rem; font-weight: 700; }
+.metric-card__badge { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Caja Informativa Insight */
+.insight-box {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #cbd5e1;
+}
+
+/* Paginación (Slick Dots) */
+.sgp-card__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.slick-dots { display: flex; gap: 8px; }
+.slick-dots__bubble { width: 6px; height: 6px; background-color: rgba(255,255,255,0.2); border-radius: 50%; }
+.slick-dots__bubble--active { background-color: var(--text-main); width: 14px; border-radius: 3px; }
+
+/* Formulario e Interacciones del Módulo de Soporte */
+.support-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group__label {
+    font-size: 0.85rem;
+    color: #94a3b8 !important;
+    text-align: left;
+}
+
+.support-form__submit-btn {
+    background-color: var(--primary-blue) !important;
+    color: #ffffff !important;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.support-form__submit-btn:hover {
+    background-color: var(--primary-blue-hover) !important;
+}
+
+.form-group__error-msg {
+    color: #ef4444 !important;
+    font-size: 0.75rem;
+    display: none;
+    margin-top: 2px;
+    text-align: left;
+}
+
+.support-form__toast {
+    background-color: #22c55e;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.85rem;
+    display: none;
+}
+
+/* Footer Institucional del Proyecto */
+.main-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
