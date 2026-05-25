@@ -60,6 +60,32 @@ body {
     border-bottom: 2px solid var(--blue-ug); 
 }
 
+
+.main-header__nav {
+    display: flex;
+    gap: 20px;
+}
+
+.main-header__link {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.main-header__link:hover {
+    color: var(--text-main);
+}
+
+.main-header__link--active {
+    color: var(--text-main);
+    border-bottom-color: var(--blue-ug);
+}
+
+
 .app-viewport { 
     flex: 1; 
     display: flex; 

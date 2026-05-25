@@ -10,7 +10,6 @@
     --border-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Reset y Reglas Universales */
 * {
     margin: 0;
     padding: 0;
@@ -46,6 +45,33 @@ body {
     font-size: 1.3rem;
     font-weight: 700;
     color: var(--text-main);
+}
+
+/* ==========================================================================
+   NAVEGACIÓN PRINCIPAL (Ajustada al diseño solicitado)
+   ========================================================================== */
+.main-header__nav {
+    display: flex;
+    gap: 20px;
+}
+
+.main-header__link {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.main-header__link:hover {
+    color: var(--text-main);
+}
+
+.main-header__link--active {
+    color: var(--text-main);
+    border-bottom-color: var(--blue-ug);
 }
 
 .main-header__logo span {

@@ -8,41 +8,25 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const params = new URLSearchParams(window.location.search);
     const materiaUrl = params.get("materia");
-    
-    let arbolGuardado = null;
 
     if (materiaUrl) {
-        const materiaDecodificada = decodeURIComponent(materiaUrl.replace(/\+/g, ' '));
-        arbolGuardado = motor.mostrarMateria(materiaDecodificada);
-        if (arbolGuardado) {
-            document.getElementById("materia-titulo").textContent = materiaDecodificada;
-            document.getElementById("materia-visor").classList.remove("oculto");
-            document.getElementById("input-nombre-materia").value = materiaDecodificada;
-        }
-    }
-
-    if (arbolGuardado) {
-        arbolMemoria = arbolGuardado;
+        const nombre = decodeURIComponent(materiaUrl.replace(/\+/g, ' '));
+        arbolMemoria = motor.mostrarMateria(nombre);
+        document.getElementById("materia-titulo").textContent = nombre;
+        document.getElementById("materia-visor").classList.remove("oculto");
+        document.getElementById("input-nombre-materia").value = nombre;
     } else {
-        const nodoP1Inicial = new NodoGrupo("P1", 0.5, [
-            new NodoNota("f1", 0.33),
-            new NodoNota("p1", 0.33),
-            new NodoNota("e1", 0.34)
+        // Si no hay materia, creamos el árbol base SIN notas
+        arbolMemoria = new NodoGrupo("PP", 1, [
+            new NodoGrupo("P1", 0.5, [new NodoNota("f1", 0.33), new NodoNota("p1", 0.33), new NodoNota("e1", 0.34)]),
+            new NodoGrupo("P2", 0.5, [new NodoNota("f2", 0.33), new NodoNota("p2", 0.33), new NodoNota("e2", 0.34)])
         ]);
-        const nodoP2Inicial = new NodoGrupo("P2", 0.5, [
-            new NodoNota("f2", 0.33),
-            new NodoNota("p2", 0.33),
-            new NodoNota("e2", 0.34)
-        ]);
-        arbolMemoria = new NodoGrupo("PP", 1, [nodoP1Inicial, nodoP2Inicial]);
     }
 
-    nP1 = arbolMemoria.hijos[0] instanceof NodoGrupo ? arbolMemoria.hijos[0] : arbolMemoria.buscar("P1") || new NodoGrupo("P1", 0.5, []);
-    nP2 = arbolMemoria.hijos[1] instanceof NodoGrupo ? arbolMemoria.hijos[1] : arbolMemoria.buscar("P2") || new NodoGrupo("P2", 0.5, []);
-    
-    p1Nota = arbolMemoria.hijos[0] instanceof NodoNota ? arbolMemoria.hijos[0] : new NodoNota("P1_M", nP1.peso, null);
-    p2Nota = arbolMemoria.hijos[1] instanceof NodoNota ? arbolMemoria.hijos[1] : new NodoNota("P2_M", nP2.peso, null);
-
+    nP1 = arbolMemoria.hijos[0]; 
+    nP2 = arbolMemoria.hijos[1];
+    p1Nota = new NodoNota("P1_M", nP1.peso, null); 
+    p2Nota = new NodoNota("P2_M", nP2.peso, null);
     construirInputsDetalle("P1", "p1-nodes", "Formativa", "Práctica", "Examen", nP1);
     construirInputsDetalle("P2", "p2-nodes", "Formativa", "Práctica", "Examen", nP2);
 
@@ -265,7 +249,8 @@ function renderizarVista() {
     const metaDeseada = parseFloat(document.getElementById("meta-input").value) || 0;
     const resumen = arbolMemoria.resumenCon(metaDeseada);
     const resumenPP = resumen["PP"];
-    
+
+
     const seccionEstadisticas = document.getElementById("seccion-estadisticas");
     const footerColapsar = document.getElementById("footer-colapsar");
     const iconoColapsar = document.getElementById("btn-colapsar-stats");
