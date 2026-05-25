@@ -289,8 +289,8 @@ function renderizarVista() {
     seccionEstadisticas.classList.remove("oculto");
 
     if (estaCompletamenteLleno) {
-        cajaGrafica.classList.add("oculto");
-        gridMetricas.classList.add("oculto");
+        cajaGrafica.classList.add("colapsado-suave");
+        gridMetricas.classList.add("colapsado-suave");
         cajaInsight.classList.add("oculto");
         footerColapsar.classList.add("oculto");
         
@@ -313,12 +313,12 @@ function renderizarVista() {
     cajaInsight.classList.remove("oculto");
 
     if (estadoUI.StatsColapsado) {
-        cajaGrafica.classList.add("oculto");
-        gridMetricas.classList.add("oculto");
+        cajaGrafica.classList.add("colapsado-suave");
+        gridMetricas.classList.add("colapsado-suave");
         iconoColapsar.classList.replace("fa-chevron-down", "fa-chevron-up");
     } else {
-        cajaGrafica.classList.remove("oculto");
-        gridMetricas.classList.remove("oculto");
+        cajaGrafica.classList.remove("colapsado-suave");
+        gridMetricas.classList.remove("colapsado-suave");
         iconoColapsar.classList.replace("fa-chevron-up", "fa-chevron-down");
     }
 

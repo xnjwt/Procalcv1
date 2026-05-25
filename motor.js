@@ -7,7 +7,7 @@ class NodoNota {
 
     buscar(nodoid) {
         if (this.id === nodoid) return this;
-        return null;
+        return null;       
     }
 
     actualizarNota(nuevaNota) {
